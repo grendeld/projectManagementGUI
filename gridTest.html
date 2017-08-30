@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: arial, serif;
+      font-size: 1.1em;
+    }
+
+    .backDrop {
+      background: #ff9350;
+      background: -webkit-gradient(left top, left bottom, color-stop(0%, #ff9350), color-stop(100%, #ff3f31));
+      background: -webkit-linear-gradient(top, #ff9350 0%, #ff3f31 100%);
+      background: linear-gradient(to bottom, #ff9350 0%, #ff3f31 100%);
+    }
+
+    .grid {
+      /*mobile version prioritized*/
+      display: grid;
+      grid-template-columns: 3fr 1fr 1fr;
+      grid-template-rows: 1fr 3fr 1fr;
+      grid-template-areas: "header header header" "main main aside" "footer footer footer";
+      grid-gap: 10px;
+      /*'fr is a new measurement in css fraction'
+      ex.
+         |      |      |      |
+         1  fr  2  fr  3  fr  4
+         can also use px, %, auto
+      */
+    }
+
+    .grid div:nth-child(even) {
+      background-color: orange;
+    }
+
+    .grid div:nth-child(odd) {
+      background-color: blue;
+    }
+
+    table {
+      border-style: groove;
+      border-width: 20px;
+      margin: auto;
+    }
+
+    .main {
+      grid-area: main;
+      display: grid;
+      /*
+    grid-column: 1 /4;
+    or
+    grid-column-start: 1;
+    grid-column-end: 4;
+    or
+    grid-column-end: span 3;
+    */
+    }
+
+    .header {
+      grid-area: header;
+      justify-self: center;
+    }
+
+    .aside {
+      grid-area: aside;
+      justify-self: right;
+    }
+
+    .footer {
+      grid-area: footer;
+    }
+
+    @media screen and (min-width:736px) {
+      /*desktop version*/
+      .grid {
+        display: grid;
+        grid-template-columns: 40px 3fr 1fr 1fr 40px;
+        grid-template-rows: 1fr 3fr 1fr;
+        grid-template-areas: ". header header header ." ". main main aside ." ". footer footer . .";
+        /*'fr is a new measurement in css fraction'
+        ex.
+           |      |      |      |
+           1  fr  2  fr  3  fr  4
+           can also use px, %, auto
+        */
+      }
+    }
+  </style>
+  <title>CSS Grid Test</title>
+</head>
+
+<body>
+  <a href="index.html">Go Back</a>
+  <table>
+    <tr>
+      <th>This</th>
+      <th>That</th>
+    </tr>
+    <tr>
+      <td>Even</td>
+      <td>Odd</td>
+    </tr>
+    <td>Off</td>
+    <td>On</td>
+    <tr>
+    </tr>
+  </table>
+  <div class="grid">
+    <div class="header">Header 1</div>
+    <div class="main">
+      <p>First Paragraph</p>
+      <p>Second Pragraph</p>
+      <p>Third Paragraph</p>
+      <p>Fourth Pragraph</p>
+    </div>
+    <div class="aside">Sidebar 3</div>
+    <div class="footer">Footer 4</div>
+  </div>
+</body>
+<script>
+</script>
+
+</html>

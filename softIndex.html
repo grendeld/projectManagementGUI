@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <script src="d3/d3.min.js"></script>
+  <link type="text/css" rel="stylesheet" href="styles/gridIndex.css" />
+</head>
+
+<body>
+  <a href="gridTest.html">Grid Test</a>
+  <a href="storyTree.html">Vertical Tree</a>
+  <a href="niceTree.html">Zoomable Tree</a>
+  <div id="projectTree"> </div>
+</body>
+<script>
+//DATA - should be called with d3.JSON method
+  var projectData = {
+    "name": "Company Name",
+    "description": "generic description",
+    "children": [{
+      "name": "Phone Systems",
+      "description": "generic description",
+      "children": [{
+          "name": "Admins",
+          "description": "generic description"
+        },
+        {
+          "name": "Support",
+          "description": "generic description",
+          "children": [{
+              "name": "Desktop Management",
+              "description": "generic description"
+            },
+            {
+              "name": "Network Performance",
+              "description": "generic description"
+            },
+            {
+              "name": "Coffee",
+              "description": "generic description"
+            },
+            {
+              "name": "Network Performance",
+              "description": "generic description"
+            },
+            {
+              "name": "Coffee",
+              "description": "generic description"
+            },
+            {
+              "name": "Online Help",
+              "description": "generic description",
+              "children": [{
+                "name": "Pro Package",
+                "description": "generic description"
+              }]
+            }
+          ]
+        }
+      ]
+    }]
+  };
+
+  //draw path
+  function diagonal(s, d) {
+    var path = "M " + d.x + ",\n" + d.y + " C " + d.x + ",\n" + (d.y + s.y) / 2 + " " + s.x + ",\n" + (d.y + s.y) / 2 + " " + s.x + ",\n" + s.y;
+    return path;
+  }
+
+
+  // Toggle children on click.
+  function click(d) {
+    if (d.children) {
+      d._children = d.children;
+      d.children = null;
+    } else {
+      d.children = d._children;
+      d._children = null;
+    }
+    update(d);
+  }
+
+  function mousedown() {
+    d3.event.stopImmediatePropagation(); //prevents other listeneers of the same event to be called ()
+  }
+
+  //define the margin object with properties of the four sides starting clockwise from the top
+  var margin = {
+      top: 30,
+      left: 20,
+      bottom: 25,
+      right: 20
+    },
+    //define width and height as the inner dimensions of the CHART AREA
+    width = 960 - margin.left - margin.right,
+    height = 720 - margin.top - margin.bottom;
+
+  // declares a tree layout and assigns the size
+  var mainTree = d3.tree().size([height, width]);
+
+  //define SVG as a G element that translates the origin (0,0 A.K.A. left, top) to the top-left corner of the CHART AREA
+  var svg = d3.select("#projectTree")
+    .append("svg")
+    .attr("width", width + margin.right + margin.left)
+    .attr("height", height + margin.top + margin.bottom)
+    .append('g')
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  //the^above convention allows subsequent code to ignore margins per se
+
+  var i = 0,
+    rectSize = 45,
+    duration = 700,
+    root;
+
+  //creating the heiarchy for the tree using json data.
+  //declares the parent data object as the root with 'children' being invoked, children must be named in json data
+  root = d3.hierarchy(projectData, function(d) {
+    return d.children;
+  });
+
+  //'initial' x + y
+  root.x0 = width / 2;
+  root.y0 = 0; //starts in center of page
+
+
+  root.children.forEach(collapse);
+  update(root);
+  // Collapse the node and all it's children
+  function collapse(d) {
+    if (d.children) {
+      d._children = d.children
+      d._children.forEach(collapse)
+      d.children = null
+    }
+  }
+
+  function collapseAll() {
+    collapse(root);
+    update();
+  }
+
+  function update(source) {
+    var treeData = mainTree(root);
+
+    var nodes = treeData.descendants();
+    var links = treeData.descendants().slice(1);
+
+    // Normalize for fixed-depth.
+    nodes.forEach(function(d) {
+      d.y = d.depth * 160;
+    });
+
+
+    // Update the nodes…
+    var node = svg.selectAll("g.node").data(nodes, function(d) {
+      return d.id || (d.id = ++i);
+    });
+
+    // Enter any new nodes at the parent's previous position.
+    var nodeEnter = node.enter().append("g")
+      .attr("cursor", function(d) {
+        return d._children || d.children ? 'pointer' : null;
+      })
+      .attr("class", "node")
+      .attr("transform", function(d) {
+        return "translate(" + source.x0 + "," + source.y0 + ")";
+      })
+      .on("click", click)
+      .on("mousedown", mousedown);
+
+    //make nodes rects
+    nodeEnter.append("rect")
+      .attr("width", rectSize)
+      .attr("height", rectSize)
+      .attr("x", -rectSize / 2) //position from left margin
+      .attr("y", -rectSize / 2) //position from top margin
+      .attr("rx", 15)
+      .attr("ry", 15)
+      .style("fill", function(d) {
+        return d._children ? " rgba(245,120,146,1)" : "#fff";
+      });
+
+    // add labels for the nodes
+    nodeEnter.append('text')
+      .attr("dy", ".30em")
+      .attr("x", function(d) {
+        return d.children || d._children ? -13 : 13;
+      })
+      .attr("text-anchor", function(d) {
+        return d.children || d._children ? "end" : "start";
+      })
+      .text(function(d) {
+        return d.data.name;
+      });
+
+    var nodeUpdate = nodeEnter.merge(node);
+
+    // Transition nodes to their new position.
+
+
+    nodeUpdate.select("rect")
+      .attr("width", rectSize)
+      .attr("height", rectSize)
+      .attr("x", -rectSize / 2) //position from left margin
+      .attr("y", -rectSize / 2) //position from top margin
+      .attr("rx", 15)
+      .attr("ry", 15)
+      .style("fill", function(d) {
+        return d._children ? " rgba(245,120,146,1)" : "#fff";
+      });
+
+    nodeUpdate.transition()
+      .duration(duration)
+      .attr("transform", function(d) {
+        return "translate(" + d.x + "," + d.y + ")";
+      });
+
+    // Transition exiting nodes to the parent's new position.
+    var nodeExit = node.exit()
+      .transition()
+      .duration(duration)
+      .attr("transform", function(d) {
+        return "translate(" + source.x + "," + source.y + ")";
+      })
+      .remove();
+
+    nodeExit.select("rect")
+      .attr("width", 0)
+      .attr("height", 0)
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("rx", 0)
+      .attr("ry", 0);
+
+    //LINKS
+    // Update the links…
+    var link = svg.selectAll("path.link")
+      .data(links, function(d) {
+        return d.id;
+      });
+
+    // Enter any new links at the parent's previous position.
+    var linkEnter = link.enter()
+      .insert("path", "g")
+      .attr("class", "link")
+      .attr("d", function(d) {
+        var o = {
+          x: source.x0,
+          y: source.y0
+        };
+        return diagonal(o, o);
+      });
+
+    var linkUpdate = linkEnter.merge(link);
+
+    // Transition links to their new position.
+    linkUpdate.transition()
+      .duration(duration)
+      .attr("d", function(d) {
+        return diagonal(d, d.parent);
+      });
+
+    // Transition exiting nodes to the parent's new position.
+    link.exit()
+      .transition()
+      .duration(duration)
+      .attr("d", function(d) {
+        var o = {
+          x: source.x,
+          y: source.y
+        };
+        return diagonal(o, o);
+      }).remove();
+
+    // Stash the old positions for transition.
+    nodes.forEach(function(d) {
+      d.x0 = d.x;
+      d.y0 = d.y;
+    });
+
+  }
+</script>
+
+</html>

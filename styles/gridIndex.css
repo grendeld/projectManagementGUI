@@ -1,0 +1,99 @@
+/*GENERAL ELEMENTS*/
+
+a {
+  font-family: serif;
+}
+
+a:focus, a:hover {
+  background-color: #2b3145;
+  text-decoration: none;
+}
+/*SVG */
+
+svg {
+  border: 3px solid steelblue;
+  box-shadow: 6px 6px 5px black;
+  position: absolute;
+  background: #ff9350;
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, #ff9350), color-stop(100%, #ff3f31));
+  background: -webkit-linear-gradient(top, #ff9350 0%, #ff3f31 100%);
+  background: linear-gradient(to bottom, #ff9350 0%, #ff3f31 100%);
+}
+
+.link {
+  fill: none;
+  stroke: rgba(80, 73, 113, 0.7);
+  stroke-width: 7px;
+}
+
+.node rect {
+  stroke: rgba(162, 45, 63, 1);
+  stroke-width: 3px;
+}
+
+.node text {
+  font: 10px sans-serif;
+  background: -webkit-linear-gradient(left, black, rgb(102, 0, 0));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/*GRID STUFF*/
+
+.containerGrid {
+  display: grid;
+  grid-template-columns: 1fr 4fr 2fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "leftNav tree rightNav";
+  grid-gap: 5px;
+}
+
+.leftNav {
+  grid-area: leftNav;
+}
+
+#projectTree {
+  grid-area: tree;
+}
+
+
+/*NAV PANEL*/
+
+.rightNav {
+  grid-area: rightNav;
+  width: 100%;
+  height: 720px;
+  background: #151719;
+  grid-column-start: 4;
+}
+
+.rightNav.active {
+  transition:1500ms;
+  grid-column-start: 3;
+}
+
+.rightNav ul li {
+  color: #718ec7;
+  list-style: none;
+  padding: 15px 10px;
+  border-bottom: 1px solid rgb(195, 60, 24, 0.3);
+}
+
+.toggleBtn {
+  visibility: visible;
+  position: absolute;
+  right: 20px;
+  top: 30px;
+}
+
+.toggleBtn span {
+  display: block;
+  width: 30px;
+  height: 5px;
+  background: #718ec7;
+  margin: 5px 0px;
+}
+
+
+/*ADDED*/

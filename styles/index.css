@@ -1,0 +1,147 @@
+svg {
+  border: 3px solid steelblue;
+  box-shadow: 6px 6px 5px black;
+  position: absolute;
+  background: rgb(150, 150, 150);
+  background: -moz-radial-gradient(center, ellipse cover, rgba(150, 150, 150, 1) 0%, rgba(89, 89, 89, 1) 100%);
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(150, 150, 150, 1) 0%, rgba(89, 89, 89, 1) 100%);
+  background: -o-radial-gradient(center, ellipse cover, rgba(150, 150, 150, 1) 0%, rgba(89, 89, 89, 1) 100%);
+  background: -ms-radial-gradient(center, ellipse cover, rgba(150, 150, 150, 1) 0%, rgba(89, 89, 89, 1) 100%);
+  background: radial-gradient(ellipse at center, rgba(150, 150, 150, 1) 0%, rgba(89, 89, 89, 1) 100%);
+  filter: sepia(30%);
+  /*background: -webkit-linear-gradient(top, #ccc 0%, #000 100%);
+  background: linear-gradient(to bottom, #ccc 0%, #000 100%);*/
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+a {
+  font-family: serif;
+}
+
+.node {
+  cursor: pointer;
+}
+
+.node rect {
+  fill: rgb(34, 61, 179);
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font: 11px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: rgba(80, 73, 113, 0.7);
+  stroke-width: 4px;
+}
+
+
+/*NAV PANEL*/
+
+.rightNav {
+  width: 200px;
+  position: fixed;
+  height: 100%;
+  background: #151719;
+  right: -200px;
+  transition: 600ms;
+}
+
+.rightNav.active {
+  right: 0px;
+  transition: 800ms;
+}
+
+.rightNav ul li {
+  color: #718ec7;
+  list-style: none;
+  padding: 15px 10px;
+  border-bottom: 1px solid rgb(195, 60, 24, 0.3);
+}
+
+.rightNav:hover ul li{
+  cursor: pointer;
+}
+
+.toggleBtn {
+  position: absolute;
+  right: 220px;
+  top: 10px;
+}
+
+.toggleBtn span {
+  display: block;
+  width: 30px;
+  height: 5px;
+  background: #718ec7;
+  margin: 5px 0px;
+}
+
+/*CLOSE SIDEBAR BUTTON */
+
+.outer {
+  position: relative;
+  margin: auto;
+  width: 70px;
+  margin-top: 200px;
+  cursor: pointer;
+}
+
+.inner {
+  width: inherit;
+  text-align: center;
+}
+
+label {
+  font-size: .8em;
+  line-height: 4em;
+  text-transform: uppercase;
+  color: #fff;
+  transition: all .3s ease-in;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.inner:before, .inner:after {
+  position: absolute;
+  content: '';
+  height: 1px;
+  width: inherit;
+  background: rgb(195, 60, 24, 0.3);
+  left: 0;
+  transition: all .3s ease-in;
+}
+
+.inner:before {
+  top: 50%;
+  transform: rotate(45deg);
+}
+
+.inner:after {
+  bottom: 50%;
+  transform: rotate(-45deg);
+}
+
+.outer:hover label {
+  opacity: 1;
+}
+
+.outer:hover .inner:before,
+.outer:hover .inner:after {
+  transform: rotate(0);
+}
+
+.outer:hover .inner:before {
+  top: 0;
+}
+
+.outer:hover .inner:after {
+  bottom: 0;
+}

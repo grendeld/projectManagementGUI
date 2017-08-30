@@ -1,0 +1,46 @@
+
+{
+"name": "Company Name",
+"description": "generic description",
+"children": [{
+    "name": "Phone Systems",
+    "description": "generic description",
+    "children": [{
+        "name": "Admins",
+        "description": "generic description"
+      },
+      {
+        "name": "Support",
+        "description": "generic description",
+        "children": [{
+            "name": "Desktop Management",
+            "description": "generic description"
+          },
+          {
+            "name": "Network Performance",
+            "description": "generic description"
+          },
+          {
+            "name": "Blah Blah",
+            "description" : "another description"
+          },
+          {
+            "name": "?Coffee?",
+            "description": "generic description"
+          },
+          {
+            "name": "Online Help",
+            "description": "generic description",
+            "children": [{
+              "name": "Pro Package",
+              "description": "generic description"
+            }]
+          }
+        ]}
+      ]
+    },
+  {
+    "name":"Heres a name",
+    "description":"generic description"
+    }]
+  }
