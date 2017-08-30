@@ -3,18 +3,25 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="device-width, initial-scale=1.0">
   <link type="text/css" rel="stylesheet" href="styles/index.css" />
   <script src="//d3js.org/d3.v3.min.js"></script>
   <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
 </head>
 
 <body>
-  <a href="gridTest.html">Grid Test</a>
-  <a href="storyTree.html">Vertical Tree</a>
-  <a href="niceTree.html">Zoomable Tree</a>
-  <input type="button" onclick="callFlare()" id="btnFlare" value="Flare"></input>
-  <input type="button" onclick="callMock()" id="btnFlare" value="Mock"></input>
-
+  <div id="topNav" class="center">
+    <ul>
+      <li> <a href="gridTest.html">Grid Test</a></li>
+      <li> <a href="storyTree.html">Vertical Tree</a></li>
+      <li><a href="niceTree.html">Zoomable Tree</a></li>
+    </ul>
+  </div>
+  <hr/>
+  <div id="btnContainer" class="center">
+    <input type="button" onclick="callFlare()" id="btnFlare" value="FLARE"></input>
+    <input type="button" onclick="callMock()" id="btnFlare" value="MOCK"></input>
+  </div>
   <div class="rightNav">
     <div class="toggleBtn" onclick="toggleSidebar()">
       <span></span>
@@ -31,17 +38,21 @@
     </ul>
     <div class="outer">
       <div class="inner" onclick="toggleSidebar()">
-        <label>Back</label>
+        <label>Close</label>
       </div>
     </div>
   </div>
+  </div>
   <br/>
   <script>
-    //BASE JS
+    //toggle NAV
     function toggleSidebar() {
       $(".rightNav").toggleClass('active');
+      $(".toggleBtn").toggleClass('active');
     };
-    //D3 SCRIPT
+
+
+    //D3 CODE
     var margin = {
         top: 30,
         left: 20,
@@ -68,6 +79,9 @@
     var svg = d3.select("body").append("svg")
       .attr("width", width + margin.right + margin.left)
       .attr("height", height + margin.top + margin.bottom)
+      .attr("viewBox", "0 0 960 800")
+      .attr("perserveAspectRatio", "xMinYMid")
+      .attr("id", "mainSVG")
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -121,22 +135,22 @@
 
     function update(source) {
 
-      // Compute the new tree layout.
+      // Compute the new tree layout
       var nodes = tree.nodes(root).reverse(),
         links = tree.links(nodes);
 
-      // Normalize for fixed-depth.
+      // Normalize for fixed-depth
       nodes.forEach(function(d) {
         d.y = d.depth * 160;
       });
 
-      // Update the nodes…
+      // Update the nodes
       var node = svg.selectAll("g.node")
         .data(nodes, function(d) {
           return d.id || (d.id = ++i);
         });
 
-      // Enter any new nodes at the parent's previous position.
+      // Enter any new nodes at the parent's previous position
       var nodeEnter = node.enter().append("g")
         .attr("class", "node")
         .attr("transform", function(d) {
@@ -168,7 +182,7 @@
         })
         .style("fill-opacity", 1e-6);
 
-      // Transition nodes to their new position.
+      // Transition nodes to their new position
       var nodeUpdate = node.transition()
         .duration(duration)
         .attr("transform", function(d) {
@@ -189,7 +203,7 @@
       nodeUpdate.select("text")
         .style("fill-opacity", 1);
 
-      // Transition exiting nodes to the parent's new position.
+      // Transition exiting nodes to the parent's new position
       var nodeExit = node.exit().transition()
         .duration(duration)
         .attr("transform", function(d) {
@@ -208,7 +222,7 @@
       nodeExit.select("text")
         .style("fill-opacity", 1e-6);
 
-      // Update the links…
+      // Update the links
       var link = svg.selectAll("path.link")
         .data(links, function(d) {
           return d.target.id;
@@ -266,6 +280,17 @@
       }
       update(d);
     }
+
+    //Scale SVG on resize (EXPERIMENT)
+    // var chart = $("#mainSVG"),
+    //   aspect = chart.width() / chart.height(),
+    //   container = chart.parent();
+    //
+    // $(window).on("resize", function() {
+    //   var targetWidth = container.width();
+    //   chart.attr("width", targetWidth);
+    //   chart.attr("height", Math.round(targetWidth / aspect));
+    // }).trigger("resize");
   </script>
 </body>
 

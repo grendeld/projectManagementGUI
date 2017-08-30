@@ -1,3 +1,9 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Raleway', sans-serif;
+}
+
 svg {
   border: 3px solid steelblue;
   box-shadow: 6px 6px 5px black;
@@ -9,17 +15,9 @@ svg {
   background: -ms-radial-gradient(center, ellipse cover, rgba(150, 150, 150, 1) 0%, rgba(89, 89, 89, 1) 100%);
   background: radial-gradient(ellipse at center, rgba(150, 150, 150, 1) 0%, rgba(89, 89, 89, 1) 100%);
   filter: sepia(30%);
+  left: 20%;
   /*background: -webkit-linear-gradient(top, #ccc 0%, #000 100%);
   background: linear-gradient(to bottom, #ccc 0%, #000 100%);*/
-}
-
-* {
-  margin: 0px;
-  padding: 0px;
-}
-
-a {
-  font-family: serif;
 }
 
 .node {
@@ -42,16 +40,64 @@ a {
   stroke-width: 4px;
 }
 
+a {
+  font-family: sans-serif;
+  text-decoration: none;
+  padding: 5px;
+}
 
-/*NAV PANEL*/
+input {
+  border: 3px solid #0082d0;
+  color: #0082d0;
+  font-size: 0.9vw;
+}
+
+input:hover {
+  background: #0082d0;
+  color: #fff;
+  transition: 500ms;
+}
+
+.center {
+  padding: 1px;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+
+/*TOP NAV*/
+
+#topNav {
+  margin-top: 10px;
+}
+
+#topNav ul li {
+  list-style: none;
+  display: inline-block;
+}
+
+#topNav a {}
+
+
+/*SIDEBAR PANEL*/
 
 .rightNav {
-  width: 200px;
+  width: 240px;
   position: fixed;
-  height: 100%;
+  height: 80%;
   background: #151719;
-  right: -200px;
+  right: -250px;
   transition: 600ms;
+  border-style: double;
+  border-width: thick;
+  border-radius: 10px;
 }
 
 .rightNav.active {
@@ -64,16 +110,24 @@ a {
   list-style: none;
   padding: 15px 10px;
   border-bottom: 1px solid rgb(195, 60, 24, 0.3);
+  text-align: center;
 }
 
-.rightNav:hover ul li{
+.rightNav li:hover {
   cursor: pointer;
+  color: #96b4f0;
 }
 
 .toggleBtn {
   position: absolute;
-  right: 220px;
+  right: 260px;
   top: 10px;
+  transition: 888ms;
+}
+
+.toggleBtn.active {
+  visibility: hidden;
+  transition: 100ms;
 }
 
 .toggleBtn span {
@@ -84,13 +138,14 @@ a {
   margin: 5px 0px;
 }
 
+
 /*CLOSE SIDEBAR BUTTON */
 
 .outer {
   position: relative;
   margin: auto;
   width: 70px;
-  margin-top: 200px;
+  margin-top: 100px;
   cursor: pointer;
 }
 
@@ -103,7 +158,7 @@ label {
   font-size: .8em;
   line-height: 4em;
   text-transform: uppercase;
-  color: #fff;
+  color: steelblue;
   transition: all .3s ease-in;
   opacity: 0;
   cursor: pointer;
@@ -112,7 +167,7 @@ label {
 .inner:before, .inner:after {
   position: absolute;
   content: '';
-  height: 1px;
+  height: 3px;
   width: inherit;
   background: rgb(195, 60, 24, 0.3);
   left: 0;
@@ -133,8 +188,7 @@ label {
   opacity: 1;
 }
 
-.outer:hover .inner:before,
-.outer:hover .inner:after {
+.outer:hover .inner:before, .outer:hover .inner:after {
   transform: rotate(0);
 }
 
