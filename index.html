@@ -7,6 +7,7 @@
   <link type="text/css" rel="stylesheet" href="styles/index.css" />
   <link id="icon" href="files/favicon.ico" rel="icon" type="image/x-icon">
   <link href='https://fonts.googleapis.com/css?family=Freehand' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400' rel='stylesheet' type='text/css'>
   <script src="//d3js.org/d3.v3.min.js"></script>
   <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
 </head>
@@ -95,26 +96,10 @@
 
     function callMock() {
       d3.json("data/mock.json", buildTree);
+      //TODO add more rects to group that represent another data value
+      var lilRect = 19;
+
     }
-
-    //  {
-    //  if (error) throw error;
-
-    // root = flare;
-    // root.x0 = width / 2;
-    // root.y0 = 0;
-    //
-    // function collapse(d) {
-    //   if (d.children) {
-    //     d._children = d.children;
-    //     d._children.forEach(collapse);
-    //     d.children = null;
-    //   }
-    // }
-    //
-    // root.children.forEach(collapse);
-    // update(root);
-    //});
 
     function buildTree(flare) {
       root = flare;
@@ -138,7 +123,7 @@
     function update(source) {
 
       // Compute the new tree layout
-      var nodes = tree.nodes(root).reverse(),
+      var nodes = tree.nodes(root).reverse(), //TODO look at reverse functionality
         links = tree.links(nodes);
 
       // Normalize for fixed-depth
@@ -230,7 +215,7 @@
           return d.target.id;
         });
 
-      // Enter any new links at the parent's previous position.
+      // Enter any new links at the parent's previous position
       link.enter().insert("path", "g")
         .attr("class", "link")
         .attr("d", function(d) {
@@ -244,12 +229,12 @@
           });
         });
 
-      // Transition links to their new position.
+      // Transition links to their new position
       link.transition()
         .duration(duration)
         .attr("d", diagonal);
 
-      // Transition exiting nodes to the parent's new position.
+      // Transition exiting nodes to the parent's new position
       link.exit().transition()
         .duration(duration)
         .attr("d", function(d) {
@@ -264,14 +249,14 @@
         })
         .remove();
 
-      // Stash the old positions for transition.
+      // Stash the old positions for transition
       nodes.forEach(function(d) {
         d.x0 = d.x;
         d.y0 = d.y;
       });
     }
 
-    // Toggle children on click.
+    // Toggle children on click
     function click(d) {
       if (d.children) {
         d._children = d.children;
@@ -283,7 +268,7 @@
       update(d);
     }
 
-    //Scale SVG on resize (EXPERIMENT)
+    //Scale SVG on resize (EXPERIMENT/REFERENCE)
     // var chart = $("#mainSVG"),
     //   aspect = chart.width() / chart.height(),
     //   container = chart.parent();
