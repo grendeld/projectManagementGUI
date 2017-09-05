@@ -50,13 +50,19 @@ a {
   transition: .3s;
 }
 
+a:link, a:visited{
+  color: rgb(13, 120, 166);
+}
 a:hover{
   border-top: 4px solid dodgerblue;
   transition: 1.1s;
+  color:red;
 }
 
+
+
 input {
-  border: 3px solid #0082d0;
+  border: 3px solid rgb(0, 130, 208);
   color: #0082d0;
   font-size: 1vw;
   padding: 10px;
@@ -75,10 +81,18 @@ input:hover {
   text-align: center;
 }
 
-hr {
+
+hr{
   border: 0;
-  height: 1px;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+  margin: 1.35em auto;
+  max-width: 100%;
+  background-position: 50%;
+  box-sizing: border-box;
+  height: 0px;
+  border-radius: 2px;
+  color: teal;
+  border: 2px solid currentColor;
+  width: 80%;
 }
 
 
