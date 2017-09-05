@@ -162,6 +162,10 @@ hr{
   margin: 5px 0px;
 }
 
+.toggleBtn:hover{
+  opacity: 0.8;
+}
+
 
 /*CLOSE SIDEBAR BUTTON */
 
