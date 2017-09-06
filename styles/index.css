@@ -1,7 +1,7 @@
 * {
   margin: 0px;
   padding: 0px;
-  font-family:  'Montserrat';
+  font-family: 'Montserrat';
 }
 
 svg {
@@ -45,21 +45,20 @@ a {
   /*font-family: Futura, "Trebuchet MS", Arial, sans-serif;*/
   text-decoration: none;
   padding: 10px;
-  letter-spacing:3px;
+  letter-spacing: 3px;
   border-top: 4px solid white;
   transition: .3s;
 }
 
-a:link, a:visited{
+a:link, a:visited {
   color: rgb(13, 120, 166);
 }
-a:hover{
+
+a:hover {
   border-top: 4px solid dodgerblue;
   transition: 1.1s;
-  color:red;
+  color: red;
 }
-
-
 
 input {
   border: 3px solid rgb(0, 130, 208);
@@ -81,8 +80,7 @@ input:hover {
   text-align: center;
 }
 
-
-hr{
+hr {
   border: 0;
   margin: 1.35em auto;
   max-width: 100%;
@@ -115,12 +113,12 @@ hr{
 .rightNav {
   width: 240px;
   position: fixed;
-  height: 80%;
+  height: inherit;
   background: #151719;
   right: -250px;
   transition: 600ms;
-  border-style: double;
-  border-width: thick;
+  /*border-style: double;
+  border-width: thick;*/
   border-radius: 10px;
 }
 
@@ -162,7 +160,7 @@ hr{
   margin: 5px 0px;
 }
 
-.toggleBtn:hover{
+.toggleBtn:hover {
   opacity: 0.8;
 }
 
@@ -173,7 +171,8 @@ hr{
   position: relative;
   margin: auto;
   width: 70px;
-  margin-top: 100px;
+  margin-top: 10px;
+  margin-bottom: 6px;
   cursor: pointer;
 }
 
